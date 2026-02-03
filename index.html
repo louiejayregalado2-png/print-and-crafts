@@ -16,7 +16,7 @@ body {
 }
 
 header {
-  background: url("images/polaroid.jpg") center/cover no-repeat;
+  background: url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac") center/cover no-repeat;
   padding: 120px 20px;
   text-align: center;
   color: white;
@@ -28,7 +28,7 @@ header h1 {
 }
 
 header p {
-  background: rgba(0,0,0,0.45);
+  background: rgba(0,0,0,0.4);
   display: inline-block;
   padding: 10px 20px;
   border-radius: 20px;
@@ -58,11 +58,12 @@ h2 {
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0,0,0,0.08);
   text-align: center;
+  cursor: pointer;
 }
 
 .card img {
   width: 100%;
-  height: 220px;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -79,18 +80,6 @@ h2 {
   font-weight: 500;
 }
 
-.price-list {
-  max-width: 600px;
-  margin: auto;
-}
-
-.price-list p {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-}
-
 .contact {
   text-align: center;
 }
@@ -105,11 +94,41 @@ h2 {
   margin-top: 20px;
 }
 
-footer {
-  background: #E6DCCF;
-  text-align: center;
+/* POPUP */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background: #fff;
+  margin: 5% auto;
   padding: 20px;
-  font-size: 0.9rem;
+  max-width: 800px;
+  border-radius: 15px;
+}
+
+.close {
+  text-align: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 15px;
+}
+
+.modal-gallery img {
+  width: 100%;
+  border-radius: 10px;
 }
 </style>
 </head>
@@ -123,56 +142,34 @@ footer {
 
 <section>
 <h2>Products</h2>
+
 <div class="products">
 
-<div class="card">
-  <img src="images/polaroid.jpg">
-  <h3>Polaroid Prints</h3>
-  <p>High-quality aesthetic polaroid photos</p>
-  <p class="price">Starts at ₱50</p>
-</div>
+  <!-- POLAROID (CLICKABLE) -->
+  <div class="card" onclick="openPolaroid()">
+    <img src="images/polaroid1.jpg">
+    <h3>Polaroid Prints</h3>
+    <p>Classic aesthetic prints</p>
+    <p class="price">Starts at ₱50</p>
+  </div>
 
-<div class="card">
-  <img src="images/keychain.jpg">
-  <h3>Photo Keychains</h3>
-  <p>Durable and cute photo keychains</p>
-  <p class="price">₱35 each</p>
-</div>
+  <div class="card">
+    <img src="images/keychain.jpg">
+    <h3>Photo Keychains</h3>
+    <p>₱35 each</p>
+  </div>
 
-<div class="card">
-  <img src="images/spotify-card.jpg">
-  <h3>Spotify Photo Card</h3>
-  <p>Custom song + photo card</p>
-  <p class="price">15 pcs — ₱55</p>
-</div>
+  <div class="card">
+    <img src="images/spotify-card.jpg">
+    <h3>Spotify Photo Card</h3>
+    <p>15 pcs – ₱55</p>
+  </div>
 
-<div class="card">
-  <img src="images/memory-box.jpg">
-  <h3>Memory Photo Box</h3>
-  <p>40 pcs photos with box</p>
-  <p class="price">₱145</p>
-</div>
-
-</div>
-</section>
-
-<section>
-<h2>Price List</h2>
-<div class="price-list">
-
-<p><strong>Polaroid Prints</strong></p>
-<p><span>15 pcs</span><span>₱50</span></p>
-<p><span>30 pcs</span><span>₱95</span></p>
-<p><span>45 pcs</span><span>₱145</span></p>
-<p><span>60 pcs</span><span>₱195</span></p>
-<p><span>75 pcs</span><span>₱245</span></p>
-<p><span>90 pcs</span><span>₱295</span></p>
-<p><span>100 pcs</span><span>₱320</span></p>
-
-<p><strong>Other Products</strong></p>
-<p><span>Photo Keychains</span><span>₱35 each</span></p>
-<p><span>Spotify Photo Card</span><span>15 pcs — ₱55</span></p>
-<p><span>Memory Photo Box</span><span>40 pcs + box — ₱145</span></p>
+  <div class="card">
+    <img src="images/memory-box.jpg">
+    <h3>Memory Photo Box</h3>
+    <p>40 pcs with box – ₱145</p>
+  </div>
 
 </div>
 </section>
@@ -180,15 +177,45 @@ footer {
 <section class="contact">
 <h2>Order Now</h2>
 <p>Send photos → Choose product → Confirm → Delivery</p>
-
 <a class="btn" href="https://www.facebook.com/profile.php?id=61579128398313" target="_blank">
-  Message us on Facebook
+Message us on Facebook
 </a>
 </section>
 
-<footer>
-© Print and Crafts
-</footer>
+<!-- POLAROID POPUP -->
+<div class="modal" id="polaroidModal">
+  <div class="modal-content">
+    <div class="close" onclick="closePolaroid()">✖</div>
+    <h2>Polaroid Prints Samples</h2>
+
+    <div class="modal-gallery">
+      <img src="images/polaroid1.jpg">
+      <img src="images/polaroid2.jpg">
+      <img src="images/polaroid3.jpg">
+      <img src="images/polaroid4.jpg">
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      📷 15 pcs — ₱50<br>
+      📷 30 pcs — ₱95<br>
+      📷 45 pcs — ₱145<br>
+      📷 60 pcs — ₱195<br>
+      📷 75 pcs — ₱245<br>
+      📷 90 pcs — ₱295<br>
+      📷 100 pcs — ₱320
+    </p>
+  </div>
+</div>
+
+<script>
+function openPolaroid() {
+  document.getElementById("polaroidModal").style.display = "block";
+}
+
+function closePolaroid() {
+  document.getElementById("polaroidModal").style.display = "none";
+}
+</script>
 
 </body>
 </html>
